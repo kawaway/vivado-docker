@@ -22,10 +22,11 @@ MAINTAINER Colm Ryan <cryan@bbn.com>
 #     libgtk2.0-0
 #     libstdc++6
 #     libqtgui4
-
 # * CI (git)
+# * volume ownership (sudo)
 RUN apt-get update && apt-get install -y \
   wget \
+  sudo \
   build-essential \
   libglib2.0-0 \
   libsm6 \
