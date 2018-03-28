@@ -8,7 +8,7 @@ MAINTAINER Colm Ryan <cryan@bbn.com>
 # * downloading Vivado (wget)
 # * xsim (gcc build-essential to also get make)
 # * MIG tool
-#     see: https://japan.xilinx.com/support/answers/67000.html 
+#     see: https://japan.xilinx.com/support/answers/67000.html
 #     libglib2.0-0
 #     libsm6
 #     libx11-6
