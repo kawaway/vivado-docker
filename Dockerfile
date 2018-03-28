@@ -2,8 +2,6 @@ FROM ubuntu:16.04
 
 MAINTAINER Colm Ryan <cryan@bbn.com>
 
-# build with docker build --build-arg VIVADO_TAR_HOST=host:port --build-arg VIVADO_TAR_FILE=Xilinx_Vivado_SDK_2016.3_1011_1 -t vivado .
-
 #install dependences for:
 # * downloading Vivado (wget)
 # * xsim (gcc build-essential to also get make)
@@ -56,6 +54,7 @@ RUN echo "Downloading ${VIVADO_TAR_FILE} from ${VIVADO_TAR_HOST}" && \
   tar xzf ${VIVADO_TAR_FILE}.tar.gz && \
   /${VIVADO_TAR_FILE}/xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config install_config.txt && \
   rm -rf ${VIVADO_TAR_FILE}*
+
 #make a Vivado user
 RUN adduser --disabled-password --gecos '' vivado
 USER vivado
