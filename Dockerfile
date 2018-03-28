@@ -7,18 +7,39 @@ MAINTAINER Colm Ryan <cryan@bbn.com>
 #install dependences for:
 # * downloading Vivado (wget)
 # * xsim (gcc build-essential to also get make)
-# * MIG tool (libglib2.0-0 libsm6 libxi6 libxrender1 libxrandr2 libfreetype6 libfontconfig)
+# * MIG tool
+#     see: https://japan.xilinx.com/support/answers/67000.html 
+#     libglib2.0-0
+#     libsm6
+#     libx11-6
+#     libxext6
+#     libxi6
+#     libxtst6
+#     libxrender1
+#     libxrandr2
+#     libfreetype6
+#     libfontconfig
+#     libgtk2.0-0
+#     libstdc++6
+#     libqtgui4
+
 # * CI (git)
 RUN apt-get update && apt-get install -y \
   wget \
   build-essential \
   libglib2.0-0 \
   libsm6 \
+  libx11-6 \
+  libxext6 \
   libxi6 \
+  libxtst6 \
   libxrender1 \
   libxrandr2 \
   libfreetype6 \
   libfontconfig \
+  libgtk2.0-0 \
+  libstdc++6 \
+  libqtgui4 \
   git
 
 # copy in config file
