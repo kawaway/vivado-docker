@@ -54,6 +54,11 @@ RUN echo "Downloading ${VIVADO_TAR_FILE} from ${VIVADO_TAR_HOST}" && \
   tar xzf ${VIVADO_TAR_FILE}.tar.gz && \
   /${VIVADO_TAR_FILE}/xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config install_config.txt && \
   rm -rf ${VIVADO_TAR_FILE}*
+RUN	cd /opt/Xilinx/Vivado/${VIVADO_VERSION}/data/boards/board_files && \
+	wget ${VIVADO_TAR_HOST}/pynq-z1.zip -q && \
+	unzip pynq-z1.zip &&\
+	rm -rf pynq-z1.zip
+
 #make a Vivado user
 RUN	adduser --disabled-password --gecos '' vivado && \
 	echo "vivado ALL=(ALL:ALL) NOPASSWD: /bin/chown" >> /etc/sudoers
