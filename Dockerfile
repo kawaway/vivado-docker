@@ -2,23 +2,43 @@ FROM ubuntu:16.04
 
 MAINTAINER Colm Ryan <cryan@bbn.com>
 
-# build with docker build --build-arg VIVADO_TAR_HOST=host:port --build-arg VIVADO_TAR_FILE=Xilinx_Vivado_SDK_2016.3_1011_1 -t vivado .
-
 #install dependences for:
 # * downloading Vivado (wget)
 # * xsim (gcc build-essential to also get make)
-# * MIG tool (libglib2.0-0 libsm6 libxi6 libxrender1 libxrandr2 libfreetype6 libfontconfig)
+# * MIG tool
+#     see: https://japan.xilinx.com/support/answers/67000.html
+#     libglib2.0-0
+#     libsm6
+#     libx11-6
+#     libxext6
+#     libxi6
+#     libxtst6
+#     libxrender1
+#     libxrandr2
+#     libfreetype6
+#     libfontconfig
+#     libgtk2.0-0
+#     libstdc++6
+#     libqtgui4
 # * CI (git)
+# * volume ownership (sudo)
 RUN apt-get update && apt-get install -y \
   wget \
+  sudo \
   build-essential \
   libglib2.0-0 \
   libsm6 \
+  libx11-6 \
+  libxext6 \
   libxi6 \
+  libxtst6 \
   libxrender1 \
   libxrandr2 \
   libfreetype6 \
   libfontconfig \
+  libgtk2.0-0 \
+  libstdc++6 \
+  libqtgui4 \
   git
 
 # copy in config file
