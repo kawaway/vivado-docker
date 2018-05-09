@@ -12,6 +12,9 @@ services:
     stdin_open: true
     environment:
       - DISPLAY=$DISPLAY
+    # for debug vivado
+    cap_add:
+      - ALL
     volumes:
       - datastore:/home/vivado/workspace
       - /tmp/.X11-unix:/tmp/.X11-unix
