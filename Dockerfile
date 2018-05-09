@@ -61,7 +61,8 @@ RUN	adduser --disabled-password --gecos '' vivado && \
 COPY entrypoint /bin/entrypoint
 USER vivado
 #add vivado tools to path
-RUN echo "source /opt/Xilinx/Vivado/${VIVADO_VERSION}/settings64.sh" >> /home/vivado/.bashrc
+ENV PATH="/opt/Xilinx/Vivado/${VIVADO_VERSION}/bin:$PATH"
+ENV PATH="/opt/Xilinx/SDK/${VIVADO_VERSION}/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/microblaze/lin/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/arm/lin/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/microblaze/linux_toolchain/lin64_le/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/aarch32/lin/gcc-arm-linux-gnueabi/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/aarch32/lin/gcc-arm-none-eabi/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/aarch64/lin/aarch64-linux/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/aarch64/lin/aarch64-none/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/armr5/lin/gcc-arm-none-eabi/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/tps/lnx64/cmake-3.3.2/bin:$PATH"
 
 #copy in the license file
 RUN mkdir /home/vivado/.Xilinx
