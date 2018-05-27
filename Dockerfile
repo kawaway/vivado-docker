@@ -62,6 +62,7 @@ RUN	apt-get install -y \
 	strace \
 	ltrace \
 	gdb \
+	minicom \
 	curl
 
 RUN	cd /opt/Xilinx/Vivado/${VIVADO_VERSION}/data/boards/board_files && \
@@ -71,8 +72,9 @@ RUN	cd /opt/Xilinx/Vivado/${VIVADO_VERSION}/data/boards/board_files && \
 
 #make a Vivado user
 RUN	adduser --disabled-password --gecos '' vivado && \
-	echo "vivado ALL=(ALL:ALL) NOPASSWD: /bin/chown" >> /etc/sudoers
-#	echo "vivado ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
+#	echo "vivado ALL=(ALL:ALL) NOPASSWD: /bin/chown" >> /etc/sudoers && \
+	echo "vivado ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+	usermod -G dialout -a vivado
 
 COPY entrypoint /bin/entrypoint
 USER vivado
