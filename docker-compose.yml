@@ -10,6 +10,7 @@ services:
         - VIVADO_VERSION=2018.1
     tty: true
     stdin_open: true
+    privileged: true
     environment:
       - DISPLAY=$DISPLAY
     # for debug vivado
