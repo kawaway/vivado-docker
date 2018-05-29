@@ -11,17 +11,19 @@ services:
     tty: true
     stdin_open: true
     privileged: true
-    environment:
-      - DISPLAY=$DISPLAY
+    #environment:
+    # - DISPLAY=$DISPLAY
     # for debug vivado
     cap_add:
       - ALL
     volumes:
       - datastore:/home/vivado/workspace
-      - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev/ttyUSB1:/dev/ttyUSB1
-    entrypoint:
-      /bin/entrypoint
+    ports:
+      - "2223:22"
+        #    entrypoint:
+        # - /usr/sbin/sshd
+        # - D
 
 volumes:
   datastore:

@@ -63,7 +63,10 @@ RUN	apt-get install -y \
 	ltrace \
 	gdb \
 	minicom \
-	curl
+	curl \
+	openssh-server
+
+RUN	mkdir -p /var/run/sshd
 
 RUN	cd /opt/Xilinx/Vivado/${VIVADO_VERSION}/data/boards/board_files && \
 	wget ${VIVADO_TAR_HOST}/pynq-z1.zip -q && \
@@ -71,18 +74,26 @@ RUN	cd /opt/Xilinx/Vivado/${VIVADO_VERSION}/data/boards/board_files && \
 	rm -rf pynq-z1.zip
 
 #make a Vivado user
-RUN	adduser --disabled-password --gecos '' vivado && \
+ARG	_CRED
+RUN	adduser vivado && \
+	echo "vivado:$_CRED" | chpasswd && \
 #	echo "vivado ALL=(ALL:ALL) NOPASSWD: /bin/chown" >> /etc/sudoers && \
 	echo "vivado ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers && \
 	usermod -G dialout -a vivado
 
-COPY entrypoint /bin/entrypoint
-USER vivado
+# For testing X11 forward and test sshd
+#RUN	apt-get install -y x11-apps openssh-client
+
 #add vivado tools to path
-ENV PATH="/opt/Xilinx/Vivado/${VIVADO_VERSION}/bin:$PATH"
-ENV PATH="/opt/Xilinx/SDK/${VIVADO_VERSION}/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/microblaze/lin/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/arm/lin/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/microblaze/linux_toolchain/lin64_le/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/aarch32/lin/gcc-arm-linux-gnueabi/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/aarch32/lin/gcc-arm-none-eabi/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/aarch64/lin/aarch64-linux/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/aarch64/lin/aarch64-none/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/gnu/armr5/lin/gcc-arm-none-eabi/bin:/opt/Xilinx/SDK/${VIVADO_VERSION}/tps/lnx64/cmake-3.3.2/bin:$PATH"
+RUN	echo -n "#!/bin/sh\n[ -f /etc/environment ] && source /etc/environment" > /etc/profile.d/environment.sh && \
+	cat /etc/profile.d/environment.sh && \
+	echo "source /opt/Xilinx/Vivado/${VIVADO_VERSION}/settings64.sh" >> /etc/environment && \
+	echo "source /opt/Xilinx/SDK/${VIVADO_VERSION}/settings64.sh" >> /etc/environment
 
 #copy in the license file
 RUN mkdir /home/vivado/.Xilinx
 COPY Xilinx.lic /home/vivado/.Xilinx/
 WORKDIR /home/vivado/workspace
+
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
