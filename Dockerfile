@@ -64,7 +64,8 @@ RUN	apt-get install -y \
 	gdb \
 	minicom \
 	curl \
-	openssh-server
+	openssh-server \
+	udev
 
 RUN	mkdir -p /var/run/sshd
 
@@ -72,6 +73,7 @@ RUN	cd /opt/Xilinx/Vivado/${VIVADO_VERSION}/data/boards/board_files && \
 	wget ${VIVADO_TAR_HOST}/pynq-z1.zip -q && \
 	unzip pynq-z1.zip &&\
 	rm -rf pynq-z1.zip
+
 
 #make a Vivado user
 ARG	_CRED
@@ -90,6 +92,10 @@ RUN	echo -n "#!/bin/sh\n[ -f /etc/environment ] && source /etc/environment" > /e
 	cat /etc/profile.d/environment.sh && \
 	echo "source /opt/Xilinx/Vivado/${VIVADO_VERSION}/settings64.sh" >> /etc/environment && \
 	echo "source /opt/Xilinx/SDK/${VIVADO_VERSION}/settings64.sh" >> /etc/environment
+
+# Install cable drivers
+RUN	cd /opt/Xilinx/Vivado/2018.1/data/xicom/cable_drivers/lin64/install_script/install_drivers && \
+	./install_drivers
 
 #copy in the license file
 USER	vivado
