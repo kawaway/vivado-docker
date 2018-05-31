@@ -24,6 +24,8 @@ services:
         #    entrypoint:
         # - /usr/sbin/sshd
         # - D
+    entrypoint:
+      - entrypoint
 
 volumes:
   datastore:

@@ -81,6 +81,7 @@ RUN	adduser vivado && \
 	echo "vivado ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers && \
 	usermod -G dialout -a vivado
 
+ADD	entrypoint /bin
 # For testing X11 forward and test sshd
 #RUN	apt-get install -y x11-apps openssh-client
 
@@ -91,9 +92,9 @@ RUN	echo -n "#!/bin/sh\n[ -f /etc/environment ] && source /etc/environment" > /e
 	echo "source /opt/Xilinx/SDK/${VIVADO_VERSION}/settings64.sh" >> /etc/environment
 
 #copy in the license file
+USER	vivado
 RUN mkdir /home/vivado/.Xilinx
 COPY Xilinx.lic /home/vivado/.Xilinx/
 WORKDIR /home/vivado/workspace
 
-EXPOSE 22
-CMD ["/usr/sbin/sshd", "-D"]
+USER	root
