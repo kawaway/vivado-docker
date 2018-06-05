@@ -74,6 +74,10 @@ RUN	cd /opt/Xilinx/Vivado/${VIVADO_VERSION}/data/boards/board_files && \
 	unzip pynq-z1.zip &&\
 	rm -rf pynq-z1.zip
 
+# X11 forwading failed because docker default IPv6 is link local only
+# temporarry disable IPv6, I'll be enable dual-stack
+RUN	echo "AddressFamily inet" >> /etc/ssh/sshd_config
+
 
 #make a Vivado user
 ARG	_CRED
