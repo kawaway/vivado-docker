@@ -21,9 +21,6 @@ services:
       - /dev/ttyUSB1:/dev/ttyUSB1
     ports:
       - "2223:22"
-        #    entrypoint:
-        # - /usr/sbin/sshd
-        # - D
     entrypoint:
       - entrypoint
 
