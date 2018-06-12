@@ -89,6 +89,15 @@ RUN	cd /opt/Xilinx/Vivado/${VIVADO_VERSION}/data/boards/board_files && \
 # temporarry disable IPv6, I'll be enable dual-stack
 RUN	echo "AddressFamily inet" >> /etc/ssh/sshd_config
 
+RUN	apt-get install -y \
+		dbus \
+		dbus-x11 \
+		xorg
+		xserver-xorg-legacy \
+		xinit \
+		xterm
+		usbutils \
+		pciutils
 
 #make a Vivado user
 ARG	_CRED
