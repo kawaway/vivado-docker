@@ -15,7 +15,7 @@ services:
     # - DISPLAY=$DISPLAY
     # for debug vivado
     cap_add:
-      - ALL
+      - sys_admin
     volumes:
       - datastore:/home/vivado/workspace
       - /dev/ttyUSB1:/dev/ttyUSB1
