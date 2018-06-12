@@ -1,3 +1,5 @@
 #!/bin/bash
 chown -R vivado:vivado .
+# for debug
+#strace -f /usr/sbin/sshd -D -d -E sshd.log >& strace.log
 /usr/sbin/sshd -D
