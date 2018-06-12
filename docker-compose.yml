@@ -8,12 +8,10 @@ services:
         - VIVADO_TAR_HOST=172.18.0.1:80
         - VIVADO_TAR_FILE=Xilinx_Vivado_SDK_2018.1_0405_1
         - VIVADO_VERSION=2018.1
-    tty: true
-    stdin_open: true
     privileged: true
-    #environment:
-    # - DISPLAY=$DISPLAY
     # for debug vivado
+    #tty: true
+    #stdin_open: true
     cap_add:
       - sys_admin
     volumes:
