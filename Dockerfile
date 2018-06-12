@@ -67,6 +67,17 @@ RUN	apt-get install -y \
 	openssh-server \
 	udev
 
+RUN	apt-get install -y \
+	# for /usr/share/zoneinfo
+	tzdata \
+        # for locale-gen
+	locales && \
+	cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+	echo 'Asia/Tokyo' > /etc/timezone
+RUN	echo 'LC_ALL=en_US.UTF-8' >  /etc/default/locale && \
+	echo 'LANG=en_US.UTF-8' >> /etc/default/locale && \
+	locale-gen en_US.UTF-8
+
 RUN	mkdir -p /var/run/sshd
 
 RUN	cd /opt/Xilinx/Vivado/${VIVADO_VERSION}/data/boards/board_files && \
