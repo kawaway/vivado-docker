@@ -105,6 +105,7 @@ RUN	cd /opt/Xilinx/Vivado/2018.1/data/xicom/cable_drivers/lin64/install_script/i
 USER	vivado
 RUN mkdir /home/vivado/.Xilinx
 COPY Xilinx.lic /home/vivado/.Xilinx/
+RUN	touch /home/vivado/.Xauthority
 WORKDIR /home/vivado/workspace
 
 USER	root
